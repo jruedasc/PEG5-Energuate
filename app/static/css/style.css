@@ -21,6 +21,7 @@ html, body {
   top: 0;
   width: 100%;
   background: #fff;
+  padding: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   z-index: 1000;
 }
@@ -49,7 +50,7 @@ html, body {
 /* 3) CAROUSEL CUSTOM */
 .carousel-custom {
   position: relative;
-  margin-top: 80px; /* espacio para header */
+  margin-top: 85px; /* espacio para header */
   overflow: hidden;
 }
 .carousel-custom .carousel-inner {
@@ -65,20 +66,21 @@ html, body {
 .carousel-custom img {
   width: 100%;
   height: auto;
-  max-height: 75vh;
+  max-height: 95vh;
   object-fit: cover;
 }
 
 /* indicadores */
 .carousel-custom .carousel-indicators {
   position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 1rem;      
+  left: 1rem;      
+  transform: none; 
   display: flex;
   gap: 1rem;
   z-index: 10;
 }
+
 .carousel-custom .carousel-indicators button {
   width: 1rem;
   height: 1rem;
@@ -94,5 +96,11 @@ html, body {
 
 /* 4) FOOTER */
 .site-footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;                
+  margin-top: -4rem;        
+  border-top-left-radius: 5rem;
+  border-top-right-radius: 5rem;
+  padding-top: 6rem;         
+  background: #fff;          
 }
