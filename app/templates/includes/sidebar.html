@@ -1,0 +1,91 @@
+      <aside class="aside">
+         <!-- START Sidebar (left)-->
+         <nav class="sidebar">
+            <!-- START user info-->
+            <div class="item user-block">
+
+            <!-- FOTO de avatar -->
+            <div class="user-block-picture">
+               <div class="user-block-status">
+                  {% if user and user.avatar %}
+                  <img src="{{ url_for('user.avatar', user_id=user.id) }}"
+                        alt="Avatar"
+                        width="60" height="60"
+                        class="img-thumbnail img-circle">
+                  {% else %}
+                  <!-- fallback si no hay avatar -->
+                  <img src="{{ url_for('static', filename='img/user/02.jpg') }}"
+                        alt="Avatar por defecto"
+                        width="60" height="60"
+                        class="img-thumbnail img-circle">
+                  {% endif %}
+                  <div class="circle circle-success circle-lg"></div>
+               </div>
+            </div>
+            <!-- CODIGO y ROL -->
+            <div class="user-block-info">
+               <span class="user-block-name item-text">
+                  Nombre:
+                  {{ user.nombre_completo }}  {{ user.apellido }}
+               </span>
+               {% if user %}
+                  <span class="user-block-role">
+                  Rol:
+                  {{ user.rol }}
+                  </span>
+               {% endif %}
+            </div>
+            </div>
+            <!-- END user info-->
+            <ul class="nav">
+               <!-- START Menu-->
+               {% if user and user.rol == 'Administrador' %}
+               <li class="nav-heading">Menú Principal</li>
+               <li >
+                  <a href="#" title="Menu" data-toggle="collapse-next" class="has-submenu">
+                     <em class="fa fa-users"></em>
+                     <span class="item-text">Usuarios</span>
+                  </a>
+                  <!-- START SubMenu item-->
+                  <ul class="nav collapse in">  
+                     <li >
+                        <a href="{{ url_for('user.index')}}" title="Administración de usuarios" data-toggle="" class="no-submenu">
+                           <div class="label label-primary pull-right"></div>
+                           <em class="fa fa-user"></em>
+                           <span class="item-text">Administración de usuarios</span>
+                        </a>
+                     </li>
+                  </ul>
+                  <!-- END SubMenu item-->
+               </li>
+               {% endif %}
+               
+               <li class="nav-heading">Operaciones</li>
+               <li>
+                  <a href="#" title="Pages" data-toggle="collapse-next" class="has-submenu">
+                     <em class="fa fa-file-text-o"></em>
+                     <span class="item-text">Módulo de Documentos</span>
+                  </a>
+                  <!-- START SubMenu item-->
+                  <ul class="nav collapse ">
+                     <li>
+                        <a href="{{ url_for('pdf.index')}}" title="Descarga de PDFS" data-toggle="" class="no-submenu">
+                           <em class="fa fa-save"></em>
+                           <span class="item-text">Descarga de PDF</span>
+                        </a>
+                     </li>
+                     {% if user and user.rol == 'Administrador' %}
+                     <li>
+                        <a href="{{ url_for('section.index')}}" title="Crear Sección" data-toggle="" class="no-submenu">
+                           <em class="fa fa-plus-circle"></em>
+                           <span class="item-text">Crear Sección</span>
+                        </a>
+                     </li>
+                     {% endif %}
+                  </ul>
+                  <!-- END SubMenu item-->
+               </li>
+            </ul>
+         </nav>
+         <!-- END Sidebar (left)-->
+      </aside>

@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}Secciones{% endblock %}
+{% block header %}Catálogo de Secciones{% endblock %}
+
+{% block content %}
+  <div class="mb-3">
+    {% if user.rol == 'Administrador' %}
+      <a href="{{ url_for('section.create') }}" class="btn btn-primary">Nueva Sección</a>
+    {% endif %}
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Orden</th>
+        <th>Nombre</th>
+        {% if user.rol == 'Administrador' %}<th>Acciones</th>{% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in sections %}
+      <tr>
+        <td>{{ s.order }}</td>
+        <td>{{ s.name }}</td>
+        {% if user.rol == 'Administrador' %}
+        <td>
+          <a href="{{ url_for('section.edit', section_id=s.id) }}" class="btn btn-sm btn-warning">Editar</a>
+          <form action="{{ url_for('section.delete', section_id=s.id) }}" method="post"
+                style="display:inline;" onsubmit="return confirm('¿Eliminar esta sección?');">
+            <button class="btn btn-sm btn-danger">Eliminar</button>
+          </form>
+        </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

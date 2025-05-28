@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block title %}Biblioteca de PDFs{% endblock %}
+{% block header %}Documentos Disponibles{% endblock %}
+
+{% block content %}
+  <div class="d-flex align-items-center mb-3">
+    {% if user.rol == 'Administrador' %}
+      <a href="{{ url_for('pdf.create') }}" class="btn btn-primary">
+        Subir nuevo PDF
+      </a>
+    {% endif %}
+  </div>
+  <br>
+  <div class="d-flex align-items-center mb-12">
+    <form method="get" class="form-inline mb-0 ml-auto">
+      <input type="search" name="q" value="{{ q }}" placeholder="Buscar..."
+             class="form-control mr-2">
+      <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+    </form>
+  </div>
+
+  {# Para cada sección, filtramos los pdfs que le pertenecen #}
+  {% for section in sections %}
+    {% set items = pdfs|selectattr('section_id', 'equalto', section.id)|list %}
+    {% if items %}
+      <h4 class="mt-4">{{ section.name }}</h4>
+      <table class="table table-sm table-striped">
+        <thead>
+        </thead>
+        <tbody>
+          {% for p in items %}
+          <tr>
+            <td>
+              <a href="{{ url_for('pdf.download', pdf_id=p.id) }}">
+                {{ p.title }} – {{ p.filename }}
+              </a>
+            </td>
+            {% if user.rol == 'Administrador' %}
+            <td>
+              <a href="{{ url_for('pdf.edit', pdf_id=p.id) }}"
+                 class="btn btn-sm btn-warning">Editar</a>
+              <form action="{{ url_for('pdf.delete', pdf_id=p.id) }}"
+                    method="post" style="display:inline;"
+                    onsubmit="return confirm('¿Eliminar este PDF?');">
+                <button class="btn btn-sm btn-danger">Eliminar</button>
+              </form>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  {% endfor %}
+
+  {# Si ninguna sección produjo items, avisamos #}
+  {% if not pdfs %}
+    <p class="text-muted">No hay PDFs disponibles.</p>
+  {% endif %}
+{% endblock %}

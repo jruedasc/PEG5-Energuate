@@ -1,0 +1,192 @@
+/* login.css */
+
+/* 0) Reset y fuente */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 1) Fuente y vars de fondo */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap');
+
+:root {
+    /* ruta CORRECTA: CSS está en /static/css/, la imagen en /static/img/ */
+    --bg-image: url('../img/Fondo_Energuate.png');
+    --overlay: rgba(255,255,255,0.5);
+    --fallback-bg: #f0f2f5;
+}
+
+body {
+    background-color: var(--fallback-bg);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.login-wrapper {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* imagen de fondo */
+.login-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+/* 2) Wrapper centrado y background opcional */
+.login-wrapper {
+    position: relative; 
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* 3) Tarjeta blanca */
+.login-card {
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    overflow: hidden;
+}
+
+/* 4) Cabecera con logo y línea de colores */
+.login-header {
+    text-align: center;
+    padding: 30px 20px 15px;
+}
+.login-header .logo {
+    max-width: 160px;
+    margin: 0 auto 15px;
+    display: block;
+}
+.login-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 12px;
+}
+.color-stripe {
+    display: flex;
+    height: 4px;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.color-stripe span { flex: 1; }
+.color-stripe .yellow { background: #FFD300; }
+.color-stripe .orange { background: #FF8900; }
+.color-stripe .red    { background: #E60000; }
+.color-stripe .green  { background: #009E60; }
+.color-stripe .blue   { background: #004B96; }
+
+/* 5) Formulario y campos */
+.login-form {
+    padding: 30px 20px 40px;
+}
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px 45px 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color .3s;
+}
+.form-group input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+.form-group .icon {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 1.1em;
+    pointer-events: none;
+}
+
+/* 6) Checkbox */
+.checkbox {
+    display: block;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    color: #444;
+}
+.checkbox input {
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* 7) Botón */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background .3s;
+}
+.btn:hover {
+    background: #0056b3;
+}
+
+/* 8) Responsive */
+@media (max-width: 480px) {
+    .login-card { margin: 0 10px; }
+    .login-form { padding: 20px 15px 30px; }
+}
+
+/* Contenedor de mensajes */
+.message-wrapper {
+  max-width: 320px;
+  margin: 1em auto;
+  text-align: center;
+}
+
+/* Estilos genéricos para cada mensaje */
+.message {
+  padding: 0.75em 1em;
+  border-radius: 4px;
+  margin-bottom: 0.5em;
+  font-size: 0.95em;
+}
+
+/* Puedes personalizar por categoría (‘error’, ‘success’, etc.) */
+.message-error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+.message-warning {
+  background: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+.message-success {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}

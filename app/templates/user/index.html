@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% block title %}Usuarios{% endblock %}
+{% block header %}Administración de Usuarios{% endblock %}
+
+{% block content %}
+  <!-- Header: botón y contador -->
+  <div class="d-flex align-items-center mb-3 w-100">
+    <a href="{{ url_for('user.create') }}" class="btn btn-primary">
+      Nuevo usuario
+    </a>
+    <div class="ml-auto">
+      <strong>Total usuarios:</strong> {{ total_users }}
+    </div>
+  </div>
+
+
+  <br>
+
+  <!-- Filtros y búsqueda -->
+  <form method="get" class="form-inline mb-4">
+    <input type="text" name="nombre" value="{{ search_nombre }}" placeholder="Buscar por nombre..." class="form-control mr-2"/>
+
+    <select name="estado" class="form-control mr-2">
+      <option value="">Todos los estados</option>
+      {% for est in estados %}
+      <option value="{{ est }}" {% if est == selected_estado %}selected{% endif %}>{{ est }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="empresa" class="form-control mr-2">
+      <option value="">Todas las empresas</option>
+      {% for emp in empresas %}
+      <option value="{{ emp }}" {% if emp == selected_empresa %}selected{% endif %}>{{ emp or 'Sin empresa' }}</option>
+      {% endfor %}
+    </select>
+
+    <select name="rol" class="form-control mr-2">
+      <option value="">Todos los roles</option>
+      {% for rl in roles %}
+      <option value="{{ rl }}" {% if rl == selected_rol %}selected{% endif %}>{{ rl }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+  </form>
+
+  <!-- Tabla de usuarios -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ loop.index }}</td>
+        <td>{{ u.cod_usuario }}</td>
+        <td>{{ u.nombre_completo }} {{ u.apellido }}</td>
+        <td>{{ u.correo }}</td>
+        <td>{{ u.rol }}</td>
+        <td>{{ u.estado }}</td>
+        <td>
+          <a href="{{ url_for('user.show', user_id=u.id) }}" class="btn btn-info btn-sm">Ver</a>
+          <a href="{{ url_for('user.edit', user_id=u.id) }}" class="btn btn-warning btn-sm">Editar</a>
+          <form action="{{ url_for('user.delete', user_id=u.id) }}"
+                method="post" style="display:inline">
+            <button type="submit"
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('¿Seguro que quieres eliminar este usuario?')">
+              Borrar
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

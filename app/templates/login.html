@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+  <title>PEG-5-2025 – Inicio de Sesión</title>
+
+  <link rel="icon" 
+        type="image/png"
+        href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="shortcut icon"
+        type="image/png"
+        href="{{ url_for('static', filename='img/favicon.png') }}">
+
+
+  <!-- Iconos Font-Awesome -->
+  <link rel="stylesheet" href="../static/vendor/font-awesome/css/font-awesome.min.css">
+
+  <!-- Tu CSS custom -->
+  <link rel="stylesheet" href="../static/css/login.css">
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card" data-toggle="play-animation" data-play="fadeIn">
+      
+      <!-- CABECERA -->
+      <div class="login-header">
+        <img src="../static/img/PEG-5-LOGO-FULL-COLOR-TRANSPARENTE.png" alt="PEG-5" class="logo">
+        <h1>Inicio de sesión</h1>
+        <div class="color-stripe">
+          <span class="yellow"></span>
+          <span class="orange"></span>
+          <span class="red"></span>
+          <span class="green"></span>
+          <span class="blue"></span>
+        </div>
+      </div>
+      
+      <!-- FORMULARIO -->
+      <form method="POST" action="{{ url_for('login.login') }}" class="login-form">
+        <div class="form-group">
+          <input
+            type="text"
+            name="identifier"
+            placeholder="Usuario o Correo electrónico"
+            required>
+          <i class="fa fa-user icon"></i>
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            required>
+          <i class="fa fa-lock icon"></i>
+        </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <br>
+        
+        <label class="checkbox">
+          <input type="checkbox" name="remember"> Recordar mi usuario
+        </label>
+        <button type="submit" class="btn">Ingresar</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Scripts (opcional: si usas animo.js o jQuery) -->
+  <script src="../static/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../static/vendor/animo.js/animo.min.js"></script>
+  <script src="../static/js/pages.js"></script>
+</body>
+</html>

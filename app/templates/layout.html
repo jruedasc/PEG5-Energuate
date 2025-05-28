@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es" class="no-ie">
+  <head>
+    <!-- Meta-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="icon"
+          type="image/png"
+          href="{{ url_for('static', filename='img/favicon.png') }}">
+    <link rel="shortcut icon"
+          type="image/png"
+          href="{{ url_for('static', filename='img/favicon.png') }}">
+
+    <title>{% block title %}PEG-5-2025 – Menu Principal{% endblock %}</title>
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <!-- Vendor CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/animo.js/animate-animo.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/whirl/dist/whirl.css') }}">
+    <!-- App CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    
+
+    <!-- Modernizr & FastClick (antes de </head>)-->
+    <script src="{{ url_for('static', filename='vendor/modernizr/modernizr.custom.js') }}"
+            type="application/javascript"></script>
+    <script src="{{ url_for('static', filename='vendor/fastclick/lib/fastclick.js') }}"
+            type="application/javascript"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      {% include 'includes/navbar.html' %}
+      {% include 'includes/sidebar.html' %}
+
+      <section>
+        <div class="content-wrapper">
+            
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, text in messages %}
+                <div class="alert alert-{{ category }} mt-3">
+                  {{ text }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+
+          <h3>{% block header %}{% endblock %}</h3>
+          {% block content %}{% endblock %}
+        </div>
+      </section>
+    </div>
+
+    <!-- Main vendor Scripts (al final del body)-->
+    <script src="{{ url_for('static', filename='vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/store-js/store+json2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/screenfull/dist/screenfull.min.js') }}"></script>
+    <!-- Tu App.js (inicializa los data-toggle, etc.) -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </body>
+</html>

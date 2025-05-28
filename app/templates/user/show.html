@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+
+{% block title %}Detalle de Usuario{% endblock %}
+{% block header %}Detalle de Usuario{% endblock %}
+
+{% block content %}
+<div class="card mb-4 shadow-sm">
+  <div class="row g-0">
+    <div class="col-md-4 text-center p-4 bg-light">
+      {% if usuario.avatar %}
+        <img src="{{ url_for('user.avatar', user_id=usuario.id) }}"
+             class="img-fluid rounded-circle shadow" alt="Avatar de {{ usuario.nombre_completo }}"
+             style="max-width: 180px;">
+      {% else %}
+        <img src="{{ url_for('static', filename='img/default-avatar.png') }}"
+             class="img-fluid rounded-circle shadow" alt="Avatar por defecto"
+             style="max-width: 180px;">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">
+          {{ usuario.nombre_completo }} {{ usuario.apellido }}
+        </h3>
+        <div class="row mt-3">
+          <div class="col-sm-6">
+            <p><strong>ID:</strong> {{ usuario.id }}</p>
+            <p><strong>Código:</strong> {{ usuario.cod_usuario }}</p>
+            <p><strong>Rol:</strong> {{ usuario.rol }}</p>
+            <p><strong>Estado:</strong> {{ usuario.estado }}</p>
+            <p><strong>Pais:</strong> {{ usuario.pais }}</p>
+          </div>
+          <div class="col-sm-6">
+            <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+            <p><strong>Teléfono:</strong> {{ usuario.telefono or '—' }}</p>
+            <p><strong>Empresa:</strong> {{ usuario.empresa or '—' }}</p>
+            <p><strong>Creado:</strong> {{ usuario.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
+            <p><strong>Modificado:</strong> {{ usuario.updated_at.strftime('%d/%m/%Y %H:%M') }}</p>
+          </div>
+        </div>
+        <a href="{{ url_for('user.index') }}" class="btn btn-primary mt-4">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

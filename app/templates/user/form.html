@@ -1,0 +1,180 @@
+{# templates/user/form.html #}
+{% extends 'layout.html' %}
+
+{% block title %}{{ 'Editar' if usuario else 'Crear' }} Usuario{% endblock %}
+{% block header %}{{ 'Editar' if usuario else 'Crear' }} Usuario{% endblock %}
+
+{% block content %}
+  {% set formdata = data %}
+
+  <form method="post" enctype="multipart/form-data">
+    <!-- Nombre y Apellidos -->
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <label>Nombre completo</label>
+        <input
+          name="nombre_completo"
+          class="form-control"
+          placeholder="Ej: Juan Pérez"
+          value="{{ formdata.get('nombre_completo', usuario.nombre_completo if usuario else '') }}"
+          required>
+      </div>
+      <div class="col-md-6">
+        <label>Apellidos</label>
+        <input
+          name="apellido"
+          class="form-control"
+          placeholder="Ej: Gómez Fuentes"
+          value="{{ formdata.get('apellido', usuario.apellido if usuario else '') }}"
+          required>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Correo, País y Teléfono -->
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <label>Correo electrónico</label>
+        <input
+          type="email"
+          name="correo"
+          class="form-control"
+          placeholder="usuario@ejemplo.com"
+          value="{{ formdata.get('correo', usuario.correo if usuario else '') }}"
+          required>
+      </div>
+      <div class="col-md-4">
+        <label>País</label>
+        <select name="pais" class="form-control" required>
+          {% for c in countries %}
+            <option value="{{ c.code }}"
+              {% if formdata.get('pais', usuario.pais if usuario else '') == c.code %}selected{% endif %}>
+              {{ c.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Teléfono (solo número local)</label>
+        <input
+          name="telefono"
+          class="form-control"
+          placeholder="Ej: 78494120"
+          value="{{ formdata.get('telefono', usuario.telefono[-8:] if usuario and usuario.telefono else '') }}">
+        <small class="form-text text-muted">
+          Sin el prefijo; se antepondrá automáticamente el código de país.
+        </small>
+      </div>
+    </div>
+
+    <!-- Empresa, Rol y Estado -->
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <label>Empresa</label>
+        <input
+          name="empresa"
+          class="form-control"
+          placeholder="Nombre de la empresa"
+          value="{{ formdata.get('empresa', usuario.empresa if usuario else '') }}">
+      </div>
+      <div class="col-md-4">
+        <label>Rol</label>
+        <select name="rol" class="form-control">
+          {% for opt in ['Administrador','Usuario'] %}
+            <option value="{{ opt }}"
+              {% if formdata.get('rol', usuario.rol if usuario else '') == opt %}selected{% endif %}>
+              {{ opt }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Estado</label>
+        <select name="estado" class="form-control">
+          {% for opt in ['Activo','Inactivo'] %}
+            <option value="{{ opt }}"
+              {% if formdata.get('estado', usuario.estado if usuario else '') == opt %}selected{% endif %}>
+              {{ opt }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Botón para cambiar contraseña al editar -->
+    {% if usuario %}
+      <div class="row mt-3">
+        <div class="col-md-6 d-flex align-items-end">
+          <button
+            id="btn-change-pwd"
+            type="button"
+            class="btn btn-warning w-100">
+            Cambiar contraseña
+          </button>
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Campos de contraseña -->
+    <div
+      id="pwd-fields"
+      class="row mt-3"
+      {% if usuario %}style="display:none"{% endif %}>
+      <div class="col-md-4">
+        <label>{{ 'Nueva contraseña' if usuario else 'Contraseña' }}</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Mínimo 6 caracteres"
+          {% if not usuario %}required{% endif %}>
+      </div>
+      <div class="col-md-4">
+        <label>Confirmar contraseña</label>
+        <input
+          type="password"
+          name="password_confirm"
+          class="form-control"
+          placeholder="Repite la contraseña"
+          {% if not usuario %}required{% endif %}>
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Avatar -->
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <label>Avatar (JPG/PNG)</label>
+        <input type="file" name="avatar" class="form-control-file" accept="image/*">
+        {% if usuario and usuario.avatar %}
+          <div class="mt-2">
+            <p>Avatar actual:</p>
+            <img
+              src="{{ url_for('user.avatar', user_id=usuario.id) }}"
+              alt="Avatar"
+              class="img-thumbnail"
+              width="150">
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <br>
+
+    <!-- Botones Finales -->
+    <div class="mt-4">
+      <button class="btn btn-success" type="submit">
+        {{ 'Actualizar' if usuario else 'Crear' }}
+      </button>
+      <a href="{{ url_for('user.index') }}" class="btn btn-secondary">
+        Volver
+      </a>
+    </div>
+  </form>
+
+  <script src="{{ url_for('static', filename='js/user_form.js') }}"></script>
+{% endblock %}

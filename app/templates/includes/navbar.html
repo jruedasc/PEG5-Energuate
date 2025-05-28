@@ -1,0 +1,62 @@
+      <nav role="navigation" class="navbar navbar-default navbar-top navbar-fixed-top">
+         <!-- START navbar header-->
+            <div class="navbar-header">
+                <a href="{{ url_for('login.menu') }}" class="navbar-brand">
+                    <div class="brand-logo">
+                        <img src="../static/img/7.png" alt="Energuate" class="img-responsive">
+                    </div>
+                </a>
+            </div>
+         <!-- END navbar header-->
+
+         <!-- START Nav wrapper-->
+         <div class="nav-wrapper">
+            <!-- START Left navbar-->
+            <ul class="nav navbar-nav">
+               <li>
+                  <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                  <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
+                     <em class="fa fa-navicon"></em>
+                  </a>
+                  <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                  <a href="#" data-toggle-state="aside-toggled" class="visible-xs">
+                     <em class="fa fa-navicon"></em>
+                  </a>
+               </li>
+               <!-- START User avatar toggle-->
+               <li>
+                  <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                  <a href="#" data-toggle-state="aside-user">
+                     <em class="fa fa-user"></em>
+                  </a>
+               </li>
+               <!-- END User avatar toggle-->
+            </ul>
+            <!-- END Left navbar-->
+
+            <!-- START Right navbar-->
+            {% if user %}
+            <ul class="nav navbar-nav navbar-right">
+               <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <em class="fa fa-user-circle"></em>
+                  {{ user.nombre_completo }}
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                  <li>
+                     <a href="{{ url_for('login.logout') }}">
+                        <em class="fa fa-sign-out"></em>
+                        Cerrar sesión
+                     </a>
+                  </li>
+                  </ul>
+               </li>
+            </ul>
+            {% endif %}
+
+            <!-- END Right navbar-->
+         </div>
+         <!-- END Nav wrapper-->
+          
+      </nav>
