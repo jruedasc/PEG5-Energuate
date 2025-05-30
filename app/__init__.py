@@ -7,6 +7,8 @@ from flask_migrate import Migrate, stamp, upgrade
 from flask_jwt_extended import JWTManager, verify_jwt_in_request, get_jwt_identity
 from .config import Config
 
+from datetime import timezone
+from zoneinfo import ZoneInfo
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -49,6 +51,16 @@ def create_app():
     def expired_token_callback(jwt_header, jwt_payload):
         flash("Tu sesión expiró, vuelve a iniciar sesión", "warning")
         return redirect(url_for("login.login"))
+    
+    @app.template_filter('localize')
+    def localize(dt, fmt="%d/%m/%Y %H:%M", tz="America/Guatemala"):
+        if not dt:
+            return ""
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        # convertimos a la zona
+        local = dt.astimezone(ZoneInfo(tz))
+        return local.strftime(fmt)
 
     # Registra blueprints
     from .controllers.main_controller import main_bp
@@ -56,12 +68,16 @@ def create_app():
     from .controllers.user_controller import user_bp
     from .controllers.pdf_controller import pdf_bp
     from .controllers.section_controller import section_bp
+    from .controllers.letter_controller import letter_bp
+    from .controllers.health_controller import health_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(login_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(pdf_bp)
     app.register_blueprint(section_bp)
+    app.register_blueprint(letter_bp)
+    app.register_blueprint(health_bp)
 
     # Crea automáticamente las tablas según los modelos
     with app.app_context():

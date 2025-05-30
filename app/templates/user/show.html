@@ -34,8 +34,8 @@
             <p><strong>Correo:</strong> {{ usuario.correo }}</p>
             <p><strong>Teléfono:</strong> {{ usuario.telefono or '—' }}</p>
             <p><strong>Empresa:</strong> {{ usuario.empresa or '—' }}</p>
-            <p><strong>Creado:</strong> {{ usuario.created_at.strftime('%d/%m/%Y %H:%M') }}</p>
-            <p><strong>Modificado:</strong> {{ usuario.updated_at.strftime('%d/%m/%Y %H:%M') }}</p>
+            <p><strong>Creado:</strong> {{ usuario.created_at|localize }}</p>
+            <p><strong>Modificado:</strong> {{ usuario.updated_at|localize }}</p>
           </div>
         </div>
         <a href="{{ url_for('user.index') }}" class="btn btn-primary mt-4">Volver</a>

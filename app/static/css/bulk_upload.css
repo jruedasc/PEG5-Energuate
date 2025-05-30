@@ -1,0 +1,12 @@
+/* Estilos para el área de drop */
+#dropArea {
+  border: 2px dashed #0d6efd;    /* borde punteado con color primary */
+  border-radius: .25rem;         /* igual que .rounded */
+  min-height: 200px;
+  position: relative;
+  cursor: pointer;
+  transition: background .2s;
+}
+#dropArea.bg-light {
+  background-color: #e9ecef;      /* efecto al hacer dragover */
+}

@@ -69,19 +69,25 @@
                   <!-- START SubMenu item-->
                   <ul class="nav collapse ">
                      <li>
-                        <a href="{{ url_for('pdf.index')}}" title="Descarga de PDFS" data-toggle="" class="no-submenu">
+                        <a href="{{ url_for('pdf.index')}}" title="Módulo PDF" data-toggle="" class="no-submenu">
                            <em class="fa fa-save"></em>
-                           <span class="item-text">Descarga de PDF</span>
+                           <span class="item-text">Módulo PDF</span>
                         </a>
                      </li>
                      {% if user and user.rol == 'Administrador' %}
                      <li>
-                        <a href="{{ url_for('section.index')}}" title="Crear Sección" data-toggle="" class="no-submenu">
+                        <a href="{{ url_for('section.index')}}" title="Módulo Sección" data-toggle="" class="no-submenu">
                            <em class="fa fa-plus-circle"></em>
-                           <span class="item-text">Crear Sección</span>
+                           <span class="item-text">Módulo Sección</span>
                         </a>
                      </li>
                      {% endif %}
+                     <li>
+                        <a href="{{ url_for('letter.index')}}" title="Módulo Carta" data-toggle="" class="no-submenu">
+                           <em class="fa fa-file-o"></em>
+                           <span class="item-text">Módulo Carta</span>
+                        </a>
+                     </li>
                   </ul>
                   <!-- END SubMenu item-->
                </li>

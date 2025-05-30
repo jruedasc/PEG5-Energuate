@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}Mis Cartas{% endblock %}
+{% block header %}Cartas Asignadas{% endblock %}
+{% block content %}
+  <div class="d-flex align-items-center mb-3">
+    {% if user.rol == 'Administrador' %}
+      <a href="{{ url_for('letter.bulk_upload') }}" class="btn btn-primary">
+        Subida Masiva de Cartas
+      </a>
+      <a href="{{ url_for('letter.upload_one') }}" class="btn btn-secondary">
+        Subir Carta Individual
+      </a>
+    {% endif %}
+  </div>
+  <br>
+  {% if letters %}
+    <table class="table table-sm table-striped">
+      <thead>
+        <tr>
+          <th>Nombre de Carta</th>
+          {% if user.rol == 'Administrador' %}<th>Usuario</th><th>Acciones</th>{% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for l in letters %}
+        <tr>
+          <td>
+            <a href="{{ url_for('letter.download', letter_id=l.id) }}">
+              {{ l.filename }}
+            </a>
+          </td>
+          {% if user.rol == 'Administrador' %}
+          <td>
+            {{ l.user.cod_usuario }} – {{ l.user.nombre_completo }}
+          </td>
+          <td>
+            <a href="{{ url_for('letter.edit', letter_id=l.id) }}" class="btn btn-sm btn-warning">Editar</a>
+            <form action="{{ url_for('letter.delete', letter_id=l.id) }}" method="post" style="display:inline;" onsubmit="return confirm('¿Eliminar esta carta?');">
+              <button class="btn btn-sm btn-danger">Eliminar</button>
+            </form>
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted">No tienes cartas disponibles.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block title %}Subida Masiva de Cartas{% endblock %}
+{% block header %}Cartas Masivas{% endblock %}
+
+{% block head_extra %}
+  <!-- Tu CSS custom -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bulk_upload.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 700px;">
+  <form method="post" enctype="multipart/form-data">
+    <!-- Área de arrastre -->
+    <div id="dropArea" class="text-center p-5 mb-3">
+      <p class="h5 text-primary mb-2">Arrastra tus cartas aquí</p>
+      <p class="text-muted">
+        o haz clic para seleccionar<br>
+        <small>(máx. 20 PDFs)</small>
+      </p>
+      <input
+        id="fileInput"
+        type="file"
+        name="pdf_files"
+        accept="application/pdf"
+        multiple
+        required
+        style="
+          position: absolute;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          opacity: 0;
+          cursor: pointer;
+        ">
+    </div>
+
+    <!-- Lista de archivos seleccionados -->
+    <div id="fileList" class="mb-4"></div>
+
+    <button type="submit" class="btn btn-success">Subir Cartas</button>
+    <a href="{{ url_for('letter.index') }}" class="btn btn-secondary ml-2">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- Tu JS custom -->
+  <script src="{{ url_for('static', filename='js/bulk_upload.js') }}"></script>
+{% endblock %}

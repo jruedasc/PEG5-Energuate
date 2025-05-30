@@ -3,25 +3,30 @@
   <head>
     <!-- Meta-->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-    <link rel="icon"
-          type="image/png"
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="icon" type="image/png"
           href="{{ url_for('static', filename='img/favicon.png') }}">
-    <link rel="shortcut icon"
-          type="image/png"
+    <link rel="shortcut icon" type="image/png"
           href="{{ url_for('static', filename='img/favicon.png') }}">
 
-    <title>{% block title %}PEG-5-2025 – Menu Principal{% endblock %}</title>
+    <title>{% block title %}PEG-5-2025 – Menú Principal{% endblock %}</title>
 
     <!-- Bootstrap CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <!-- Vendor CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/animo.js/animate-animo.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/whirl/dist/whirl.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendor/animo.js/animate-animo.css') }}">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='vendor/whirl/dist/whirl.css') }}">
     <!-- App CSS-->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
-    
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/app.css') }}">
+
+    {% block head_extra %}{% endblock %}
 
     <!-- Modernizr & FastClick (antes de </head>)-->
     <script src="{{ url_for('static', filename='vendor/modernizr/modernizr.custom.js') }}"
@@ -36,7 +41,7 @@
 
       <section>
         <div class="content-wrapper">
-            
+
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, text in messages %}
@@ -58,7 +63,9 @@
     <script src="{{ url_for('static', filename='vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/store-js/store+json2.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/screenfull/dist/screenfull.min.js') }}"></script>
-    <!-- Tu App.js (inicializa los data-toggle, etc.) -->
+    <!-- Tu App.js -->
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
   </body>
 </html>
