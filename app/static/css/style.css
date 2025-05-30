@@ -66,7 +66,7 @@ html, body {
 .carousel-custom img {
   width: 100%;
   height: auto;
-  max-height: 95vh;
+  max-height: 87vh;
   object-fit: cover;
 }
 
@@ -94,13 +94,71 @@ html, body {
   background: #0dcaf0;
 }
 
-/* 4) FOOTER */
-.site-footer {
+/* 4) PDF */
+.pdf-section {
   position: relative;
-  z-index: 2;                
-  margin-top: -4rem;        
+  z-index: 1;
+  margin-top: -4rem;              
+  padding-top: 6rem;              
   border-top-left-radius: 5rem;
   border-top-right-radius: 5rem;
-  padding-top: 6rem;         
-  background: #fff;          
+  background: #e8f4f7;            /* celeste suave */
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
 }
+
+/* Tarjetas de PDF */
+
+/* Título de la sección PDF */
+.pdf-section__title {
+  font-size: 1.5rem;              
+  font-weight: 700;                
+  color: #000000;                  
+  position: center;
+  display: center;         
+}
+
+.pdf-section .pdf-link {
+  width: 100%;
+  max-width: 250px;
+  padding: 1rem;
+  border-radius: .5rem;
+  background: #ffffffe5;              
+  color: #000;                   
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.pdf-section .pdf-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.pdf-section .pdf-link i {
+  color: #dc3545;                  
+}
+
+/* 5) FOOTER */
+.site-footer {
+  position: relative;
+  z-index: 1;                     
+  margin-top: -2rem;              
+  padding-top: 6rem;              
+  background: #fff;               
+  color: #000;                    
+  border-top-left-radius: 5rem;
+  border-top-right-radius: 5rem;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+.site-footer .footer-contact i {
+  font-size: 1.25rem;
+  vertical-align: middle;
+}
+.site-footer .footer-contact div {
+  font-size: .95rem;
+}
+.site-footer .small {
+  opacity: .8;
+  margin-top: 1rem;
+}
+
+
