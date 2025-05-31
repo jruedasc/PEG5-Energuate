@@ -10,6 +10,18 @@
 {% block content %}
 <div class="container" style="max-width: 700px;">
   <form method="post" enctype="multipart/form-data">
+
+    <!-- Instrucción de formato de nombre de archivo -->
+    <div class="mb-3">
+      <small class="text-secondary">
+        El nombre del archivo PDF debe ir con este formato: 
+        <strong>Nombre - Cod_Usuario</strong><br>
+        Ejemplo: <em>Carta para Sebastián - U15.pdf</em>
+      </small>
+    </div>
+
+    <br>
+
     <!-- Área de arrastre -->
     <div id="dropArea" class="text-center p-5 mb-3">
       <p class="h5 text-primary mb-2">Arrastra tus cartas aquí</p>
@@ -33,8 +45,12 @@
         ">
     </div>
 
+    <br>
+
     <!-- Lista de archivos seleccionados -->
     <div id="fileList" class="mb-4"></div>
+
+    <br>
 
     <button type="submit" class="btn btn-success">Subir Cartas</button>
     <a href="{{ url_for('letter.index') }}" class="btn btn-secondary ml-2">Cancelar</a>

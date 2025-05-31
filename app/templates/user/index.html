@@ -3,48 +3,56 @@
 {% block header %}Administración de Usuarios{% endblock %}
 
 {% block content %}
-  <!-- Header: botón y contador -->
+
   <div class="d-flex align-items-center mb-3 w-100">
+
+    <!-- Botón “Nuevo usuario” -->
     <a href="{{ url_for('user.create') }}" class="btn btn-primary">
       Nuevo usuario
     </a>
+
+    <!-- Botón de exportar a Excel -->
+    <a href="{{ url_for('user.export_users_excel') }}" class="btn btn-success mr-2">
+      <i class="fa fa-file-excel-o"></i> Exportar a Excel
+    </a>
+
+    <!-- Contador de total usuarios -->
     <div class="ml-auto">
       <strong>Total usuarios:</strong> {{ total_users }}
     </div>
   </div>
 
-
   <br>
 
-  <!-- Filtros y búsqueda -->
+  <!-- 2) Filtros y búsqueda -->
   <form method="get" class="form-inline mb-4">
     <input type="text" name="nombre" value="{{ search_nombre }}" placeholder="Buscar por nombre..." class="form-control mr-2"/>
 
     <select name="estado" class="form-control mr-2">
       <option value="">Todos los estados</option>
       {% for est in estados %}
-      <option value="{{ est }}" {% if est == selected_estado %}selected{% endif %}>{{ est }}</option>
+        <option value="{{ est }}" {% if est == selected_estado %}selected{% endif %}>{{ est }}</option>
       {% endfor %}
     </select>
 
     <select name="empresa" class="form-control mr-2">
       <option value="">Todas las empresas</option>
       {% for emp in empresas %}
-      <option value="{{ emp }}" {% if emp == selected_empresa %}selected{% endif %}>{{ emp or 'Sin empresa' }}</option>
+        <option value="{{ emp }}" {% if emp == selected_empresa %}selected{% endif %}>{{ emp or 'Sin empresa' }}</option>
       {% endfor %}
     </select>
 
     <select name="rol" class="form-control mr-2">
       <option value="">Todos los roles</option>
       {% for rl in roles %}
-      <option value="{{ rl }}" {% if rl == selected_rol %}selected{% endif %}>{{ rl }}</option>
+        <option value="{{ rl }}" {% if rl == selected_rol %}selected{% endif %}>{{ rl }}</option>
       {% endfor %}
     </select>
 
     <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
   </form>
 
-  <!-- Tabla de usuarios -->
+  <!-- 3) Tabla de usuarios -->
   <table class="table table-striped">
     <thead>
       <tr>
