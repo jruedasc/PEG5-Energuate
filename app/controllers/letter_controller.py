@@ -18,7 +18,7 @@ def current_user():
 @jwt_required()
 def index():
     user = current_user()
-    if user.rol == 'Administrador':
+    if user.rol in ['Administrador', 'Trabajador']:
         letters = Letter.query.order_by(Letter.created_at.desc()).all()
     else:
         letters = Letter.query.filter_by(user_id=user.id)\

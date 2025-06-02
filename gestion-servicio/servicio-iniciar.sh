@@ -9,6 +9,6 @@ set -euo pipefail
 
 cd /srv/peg5/PEG5-Energuate || exit 1
 echo "[INFO] Iniciando servicios..."
-docker-compose up -d
+docker-compose up --build -d
 echo "[INFO] Servicios iniciados"
 echo "[INFO] Web: http://localhost:8090"

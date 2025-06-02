@@ -18,6 +18,8 @@ def create_app():
     app = Flask(__name__, template_folder="templates", static_folder="static")
     app.config.from_object(Config)
 
+    app.config['MAX_CONTENT_LENGTH'] = 24 * 1024 * 1024
+
     # Inicializa las extensiones
     db.init_app(app)
     migrate.init_app(app, db)

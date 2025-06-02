@@ -29,10 +29,14 @@
               {{ l.filename }}
             </a>
           </td>
-          {% if user.rol == 'Administrador' %}
+         
+          {% if user and user.rol in ['Administrador', 'Trabajador'] %}
           <td>
             {{ l.user.cod_usuario }} – {{ l.user.nombre_completo }}
           </td>
+          {% endif %}
+
+          {% if user.rol == 'Administrador' %}
           <td>
             <a href="{{ url_for('letter.edit', letter_id=l.id) }}" class="btn btn-sm btn-warning">Editar</a>
             <form action="{{ url_for('letter.delete', letter_id=l.id) }}" method="post" style="display:inline;" onsubmit="return confirm('¿Eliminar esta carta?');">
@@ -40,6 +44,7 @@
             </form>
           </td>
           {% endif %}
+          
         </tr>
         {% endfor %}
       </tbody>
