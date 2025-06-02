@@ -29,20 +29,17 @@ def _get_countries():
 @jwt_required()
 def index():
     # 1) Usuario actual y permiso
-    admin = current_user()
-    if admin.rol != 'Administrador':
+    user = current_user()
+    if user.rol not in ['Administrador', 'Trabajador']:
         abort(403)
 
-    # 2) Conteo total de usuarios SIN FILTROS
     total_users = User.query.count()
 
-    # 3) Lectura de filtros y búsqueda
     estado_sel = request.args.get('estado', '')
     empresa_sel = request.args.get('empresa', '')
     rol_sel = request.args.get('rol', '')
     nombre_busq = request.args.get('nombre', '')
 
-    # 4) Query base + aplicación de filtros
     q = User.query
     if estado_sel:
         q = q.filter(User.estado == estado_sel)
@@ -53,23 +50,19 @@ def index():
     if nombre_busq:
         q = q.filter(User.nombre_completo.ilike(f'%{nombre_busq}%'))
 
-    # 5) Conteos para agrupar (si los quieres mostrar)
     estado_counts = db.session.query(User.estado, func.count(User.id)).group_by(User.estado).all()
     empresa_counts = db.session.query(User.empresa, func.count(User.id)).group_by(User.empresa).all()
     rol_counts = db.session.query(User.rol, func.count(User.id)).group_by(User.rol).all()
 
-    # 6) Ejecución final y lista de usuarios filtrados
     users = q.order_by(User.id).all()
 
-    # 7) Valores únicos para los dropdowns
     estados = [e for e, _ in estado_counts]
     empresas = [e for e, _ in empresa_counts]
     roles = [r for r, _ in rol_counts]
 
-    # 8) Render
     return render_template(
         'user/index.html',
-        user=admin,
+        user=user,
         total_users=total_users,
         users=users,
         estados=estados,
@@ -89,7 +82,7 @@ def index():
 @jwt_required()
 def show(user_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Trabajador']:
         abort(403)
     usuario = User.query.get_or_404(user_id)
     return render_template('user/show.html', user=user, usuario=usuario)
@@ -256,15 +249,12 @@ def avatar(user_id):
 @user_bp.route('/export', methods=['GET'])
 @jwt_required()
 def export_users_excel():
-    # Verificar permiso de administrador
-    admin = current_user()
-    if admin.rol != 'Administrador':
+    user = current_user()
+    if user.rol not in ['Administrador', 'Trabajador']:
         abort(403)
 
-    # 1) Consultar todos los usuarios (sin filtros)
     users = User.query.order_by(User.id).all()
 
-    # 2) Preparar datos en forma de lista de diccionarios
     data = []
     for u in users:
         data.append({
@@ -278,16 +268,12 @@ def export_users_excel():
 
         })
 
-    # 3) Crear DataFrame
     df = pd.DataFrame(data)
 
-    # 4) Escribir el DataFrame en un Excel en memoria (sin llamar a writer.save())
     output = BytesIO()
     with pd.ExcelWriter(output, engine='openpyxl') as writer:
         df.to_excel(writer, index=False, sheet_name='Usuarios')
-        # No se necesita writer.save(): el contexto cierra y escribe al salir
 
-    # 5) Devolver la respuesta con headers para descarga
     output.seek(0)
     headers = {
         'Content-Disposition': 'attachment; filename=usuarios.xlsx',

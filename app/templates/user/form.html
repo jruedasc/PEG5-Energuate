@@ -81,7 +81,7 @@
       <div class="col-md-4">
         <label>Rol</label>
         <select name="rol" class="form-control">
-          {% for opt in ['Administrador','Usuario'] %}
+          {% for opt in ['Administrador','Trabajador','Usuario'] %}
             <option value="{{ opt }}"
               {% if formdata.get('rol', usuario.rol if usuario else '') == opt %}selected{% endif %}>
               {{ opt }}

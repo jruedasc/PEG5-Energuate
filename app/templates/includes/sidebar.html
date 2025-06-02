@@ -39,7 +39,7 @@
             <!-- END user info-->
             <ul class="nav">
                <!-- START Menu-->
-               {% if user and user.rol == 'Administrador' %}
+               {% if user and user.rol in ['Administrador', 'Trabajador'] %}
                <li class="nav-heading">Menú Principal</li>
                <li >
                   <a href="#" title="Menu" data-toggle="collapse-next" class="has-submenu">
@@ -74,7 +74,7 @@
                            <span class="item-text">Módulo PDF</span>
                         </a>
                      </li>
-                     {% if user and user.rol == 'Administrador' %}
+                     {% if user and user.rol in ['Administrador', 'Trabajador'] %}
                      <li>
                         <a href="{{ url_for('section.index')}}" title="Módulo Sección" data-toggle="" class="no-submenu">
                            <em class="fa fa-plus-circle"></em>

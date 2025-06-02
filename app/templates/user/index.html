@@ -6,10 +6,12 @@
 
   <div class="d-flex align-items-center mb-3 w-100">
 
+    {% if user.rol == 'Administrador' %}
     <!-- Botón “Nuevo usuario” -->
     <a href="{{ url_for('user.create') }}" class="btn btn-primary">
       Nuevo usuario
     </a>
+    {% endif %}
 
     <!-- Botón de exportar a Excel -->
     <a href="{{ url_for('user.export_users_excel') }}" class="btn btn-success mr-2">
@@ -76,6 +78,7 @@
         <td>{{ u.estado }}</td>
         <td>
           <a href="{{ url_for('user.show', user_id=u.id) }}" class="btn btn-info btn-sm">Ver</a>
+          {% if user.rol == 'Administrador' %}
           <a href="{{ url_for('user.edit', user_id=u.id) }}" class="btn btn-warning btn-sm">Editar</a>
           <form action="{{ url_for('user.delete', user_id=u.id) }}"
                 method="post" style="display:inline">
@@ -85,6 +88,7 @@
               Borrar
             </button>
           </form>
+          {% endif %}
         </td>
       </tr>
       {% endfor %}

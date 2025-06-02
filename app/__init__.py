@@ -1,6 +1,6 @@
 # app/__init__.py
 
-from flask import Flask, flash, redirect, url_for
+from flask import Flask, flash, redirect, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
 from flask_migrate import Migrate, stamp, upgrade
@@ -61,6 +61,11 @@ def create_app():
         # convertimos a la zona
         local = dt.astimezone(ZoneInfo(tz))
         return local.strftime(fmt)
+    
+    @app.errorhandler(403)
+    def forbidden_error(error):
+        # Retorna el template 403.html con el status code 403
+        return render_template('403.html'), 403
 
     # Registra blueprints
     from .controllers.main_controller import main_bp
