@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template, request, redirect, url_for, flash, abort, Response
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy import or_
@@ -13,6 +14,7 @@ def current_user():
     uid = get_jwt_identity()
     return User.query.get_or_404(uid)
 
+
 @pdf_bp.route('/')
 @jwt_required()
 def index():
@@ -27,9 +29,10 @@ def index():
         )
 
     pdfs = query.order_by(Pdf.created_at.desc()).all()
-    # cargamos también las secciones, ordenadas
+    # Cargamos también las secciones, ordenadas
     sections = Section.query.order_by(Section.order).all()
     return render_template('pdf/index.html', pdfs=pdfs, sections=sections, user=user, q=q)
+
 
 @pdf_bp.route('/create', methods=['GET', 'POST'])
 @jwt_required()
@@ -41,20 +44,25 @@ def create():
     sections = Section.query.order_by(Section.order).all()
 
     if request.method == 'POST':
-        title       = request.form.get('title', '').strip()
-        section_id  = request.form.get('section_id', type=int)
-        file        = request.files.get('file')
+        title         = request.form.get('title', '').strip()
+        section_id    = request.form.get('section_id', type=int)
+        file          = request.files.get('file')
         original_name = file.filename if file and file.filename else ''
 
         if not title or not file or not original_name or not section_id:
             flash('Título, sección y archivo son obligatorios', 'danger')
             return redirect(url_for('pdf.create'))
 
+        # Validamos que la sección exista
         Section.query.get_or_404(section_id)
+
+        # **Extraemos el nombre sin la extensión “.pdf”**
+        # Ejemplo: si original_name = "Documento de Prueba.pdf", display_name = "Documento de Prueba"
+        display_name = os.path.splitext(original_name)[0]
 
         p = Pdf(
             title      = title,
-            filename   = original_name,
+            filename   = display_name,    # guardamos SIN ".pdf"
             file_data  = file.read(),
             section_id = section_id
         )
@@ -64,6 +72,7 @@ def create():
         return redirect(url_for('pdf.index'))
 
     return render_template('pdf/form.html', pdf=None, user=user, sections=sections)
+
 
 @pdf_bp.route('/<int:pdf_id>/edit', methods=['GET', 'POST'])
 @jwt_required()
@@ -86,18 +95,23 @@ def edit(pdf_id):
         
         Section.query.get_or_404(section_id)
 
+        # Actualizamos título y sección
         p.title      = title
         p.section_id = section_id
 
+        # Si suben un nuevo PDF, extraemos el nombre base sin ".pdf" y lo asignamos
         if file and file.filename:
-            p.filename  = file.filename
-            p.file_data = file.read()
+            original_name = file.filename
+            display_name  = os.path.splitext(original_name)[0]
+            p.filename   = display_name   # guardamos SIN ".pdf"
+            p.file_data  = file.read()
 
         db.session.commit()
         flash('PDF actualizado', 'success')
         return redirect(url_for('pdf.index'))
 
     return render_template('pdf/form.html', pdf=p, user=user, sections=sections)
+
 
 @pdf_bp.route('/<int:pdf_id>/delete', methods=['POST'])
 @jwt_required()
@@ -112,11 +126,17 @@ def delete(pdf_id):
     flash('PDF eliminado', 'warning')
     return redirect(url_for('pdf.index'))
 
+
 @pdf_bp.route('/<int:pdf_id>/download')
 @jwt_required()
 def download(pdf_id):
     p = Pdf.query.get_or_404(pdf_id)
-    download_name = f"{p.title} - {p.filename}"
+
+    # Como p.filename ya está guardado SIN la extensión, se la agregamos al nombre de descarga:
+    # Por ejemplo: si p.title="Manuales" y p.filename="Instructivo de Usuario",
+    # download_name será "Manuales - Instructivo de Usuario.pdf"
+    download_name = f"{p.title} - {p.filename}.pdf"
+
     return Response(
         p.file_data,
         mimetype='application/pdf',

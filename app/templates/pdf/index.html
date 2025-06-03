@@ -20,20 +20,19 @@
     </form>
   </div>
 
-  {# Para cada sección, filtramos los pdfs que le pertenecen #}
+  {# Por cada sección, mostramos sus PDFs#}
   {% for section in sections %}
     {% set items = pdfs|selectattr('section_id', 'equalto', section.id)|list %}
     {% if items %}
       <h4 class="mt-4">{{ section.name }}</h4>
       <table class="table table-sm table-striped">
-        <thead>
-        </thead>
+        <thead></thead>
         <tbody>
           {% for p in items %}
           <tr>
             <td>
               <a href="{{ url_for('pdf.download', pdf_id=p.id) }}">
-                {{ p.title }} – {{ p.filename }}
+                {{ p.title }}
               </a>
             </td>
             {% if user.rol == 'Administrador' %}
@@ -54,7 +53,6 @@
     {% endif %}
   {% endfor %}
 
-  {# Si ninguna sección produjo items, avisamos #}
   {% if not pdfs %}
     <p class="text-muted">No hay PDFs disponibles.</p>
   {% endif %}

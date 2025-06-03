@@ -1,9 +1,25 @@
 {% extends 'layout.html' %}
-{% block title %}Subida Individual de Carta{% endblock %}
-{% block header %}Cargar una Carta{% endblock %}
+{% block title %}
+  {% if letter %}Editar Carta{% else %}Subida Individual de Carta{% endif %}
+{% endblock %}
+{% block header %}
+  {% if letter %}Editar Carta{% else %}Cargar una Carta{% endif %}
+{% endblock %}
+
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     <div class="form-group">
+
+      <div class="mb-3">
+        <small class="text-secondary">
+          El nombre del archivo PDF debe ir con este formato:<br>
+          <strong>Nombre</strong><br>
+          Ejemplo: <em>Carta para Sebastián</em>
+        </small>
+      </div>
+
+      <br>
+
       <label>Usuario</label>
       <select name="cod_usuario" class="form-control" required>
         <option value="">-- Selecciona usuario --</option>
@@ -17,14 +33,22 @@
         {% endfor %}
       </select>
     </div>
+
+    <br>
+
     <div class="form-group mt-3">
       <label>Archivo PDF de la Carta</label>
       <input type="file" name="file" accept="application/pdf" class="form-control-file"
              {% if not letter %}required{% endif %}>
       {% if letter %}
-        <small class="form-text text-muted">Archivo actual: {{ letter.filename }}</small>
+        <small class="form-text text-muted">
+          Archivo actual: {{ letter.filename }}.pdf
+        </small>
       {% endif %}
     </div>
+
+    <br>
+
     <button type="submit" class="btn btn-success mt-3">
       {% if letter %}Actualizar Carta{% else %}Subir Carta{% endif %}
     </button>

@@ -3,7 +3,7 @@
 {% block header %}Cartas Masivas{% endblock %}
 
 {% block head_extra %}
-  <!-- Tu CSS custom -->
+  <!-- CSS personalizado, si lo necesitas -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bulk_upload.css') }}">
 {% endblock %}
 
@@ -14,16 +14,16 @@
     <!-- Instrucción de formato de nombre de archivo -->
     <div class="mb-3">
       <small class="text-secondary">
-        El nombre del archivo PDF debe ir con este formato: 
-        <strong>Nombre - Cod_Usuario</strong><br>
-        Ejemplo: <em>Carta para Sebastián - U15.pdf</em>
+        El nombre del archivo PDF debe ir con este formato:<br>
+        <strong>Cod_Usuario – Nombre</strong><br>
+        Ejemplo: <em>U15 – Carta para Sebastián</em>
       </small>
     </div>
 
     <br>
 
     <!-- Área de arrastre -->
-    <div id="dropArea" class="text-center p-5 mb-3">
+    <div id="dropArea" class="text-center p-5 mb-3" style="border: 2px dashed #ccc; border-radius: 5px;">
       <p class="h5 text-primary mb-2">Arrastra tus cartas aquí</p>
       <p class="text-muted">
         o haz clic para seleccionar<br>
@@ -47,7 +47,7 @@
 
     <br>
 
-    <!-- Lista de archivos seleccionados -->
+    <!-- Lista de archivos seleccionados (se llena con JavaScript en bulk_upload.js) -->
     <div id="fileList" class="mb-4"></div>
 
     <br>
@@ -59,6 +59,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <!-- Tu JS custom -->
+  <!-- JavaScript personalizado para mostrar la lista de PDFs antes de subir (bulk_upload.js) -->
   <script src="{{ url_for('static', filename='js/bulk_upload.js') }}"></script>
 {% endblock %}
