@@ -38,7 +38,7 @@ def index():
 @jwt_required()
 def create():
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     sections = Section.query.order_by(Section.order).all()
@@ -78,7 +78,7 @@ def create():
 @jwt_required()
 def edit(pdf_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     p = Pdf.query.get_or_404(pdf_id)
@@ -117,7 +117,7 @@ def edit(pdf_id):
 @jwt_required()
 def delete(pdf_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     p = Pdf.query.get_or_404(pdf_id)
@@ -132,9 +132,6 @@ def delete(pdf_id):
 def download(pdf_id):
     p = Pdf.query.get_or_404(pdf_id)
 
-    # Como p.filename ya está guardado SIN la extensión, se la agregamos al nombre de descarga:
-    # Por ejemplo: si p.title="Manuales" y p.filename="Instructivo de Usuario",
-    # download_name será "Manuales - Instructivo de Usuario.pdf"
     download_name = f"{p.title} - {p.filename}.pdf"
 
     return Response(

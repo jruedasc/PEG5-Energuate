@@ -3,7 +3,7 @@
 {% block header %}Cartas Asignadas{% endblock %}
 {% block content %}
   <div class="d-flex align-items-center mb-3">
-    {% if user.rol == 'Administrador' %}
+    {% if user.rol in ['Administrador', 'Administrador_2', 'Trabajador'] %}
       <a href="{{ url_for('letter.bulk_upload') }}" class="btn btn-primary">
         Subida Masiva de Cartas
       </a>
@@ -18,9 +18,9 @@
       <thead>
         <tr>
           <th>Nombre de Carta</th>
-          {% if user.rol in ['Administrador', 'Trabajador'] %}
+          {% if user.rol in ['Administrador', 'Administrador_2', 'Trabajador'] %}
             <th>Usuario</th>
-            {% if user.rol == 'Administrador' %}
+            {% if user.rol in ['Administrador', 'Administrador_2'] %}
               <th>Acciones</th>
             {% endif %}
           {% endif %}
@@ -35,13 +35,13 @@
             </a>
           </td>
 
-          {% if user.rol in ['Administrador', 'Trabajador'] %}
+          {% if user.rol in ['Administrador', 'Administrador_2', 'Trabajador'] %}
           <td>
             {{ l.user.nombre_completo }} {{ l.user.apellido }}
           </td>
           {% endif %}
 
-          {% if user.rol == 'Administrador' %}
+          {% if user.rol in ['Administrador', 'Administrador_2'] %}
           <td>
             <a href="{{ url_for('letter.edit', letter_id=l.id) }}" class="btn btn-sm btn-warning">
               Editar

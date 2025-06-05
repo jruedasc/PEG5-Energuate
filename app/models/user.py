@@ -15,6 +15,8 @@ class User(db.Model):
     correo          = db.Column(db.String(120), unique=True, nullable=False)
     pais            = db.Column(db.String(2), nullable=False, default='GT')
     telefono        = db.Column(db.String(20))
+    pais_2          = db.Column(db.String(2))  
+    telefono_2      = db.Column(db.String(20))  
     avatar          = db.Column(LargeBinary)
     estado          = db.Column(db.String(20), nullable=False, default="Activo")
     rol             = db.Column(db.String(64), nullable=False, default="Usuario")

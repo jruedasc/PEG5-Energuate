@@ -21,7 +21,7 @@ def index():
 @jwt_required()
 def create():
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     if request.method == 'POST':
@@ -43,7 +43,7 @@ def create():
 @jwt_required()
 def edit(section_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     s = Section.query.get_or_404(section_id)
@@ -66,7 +66,7 @@ def edit(section_id):
 @jwt_required()
 def delete(section_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     s = Section.query.get_or_404(section_id)

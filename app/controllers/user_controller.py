@@ -30,7 +30,7 @@ def _get_countries():
 def index():
     # 1) Usuario actual y permiso
     user = current_user()
-    if user.rol not in ['Administrador', 'Trabajador']:
+    if user.rol not in ['Administrador', 'Administrador_2', 'Trabajador']:
         abort(403)
 
     total_users = User.query.count()
@@ -82,7 +82,7 @@ def index():
 @jwt_required()
 def show(user_id):
     user = current_user()
-    if user.rol not in ['Administrador', 'Trabajador']:
+    if user.rol not in ['Administrador', 'Administrador_2', 'Trabajador']:
         abort(403)
     usuario = User.query.get_or_404(user_id)
     return render_template('user/show.html', user=user, usuario=usuario)
@@ -92,7 +92,7 @@ def show(user_id):
 @jwt_required()
 def create():
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     countries = _get_countries()
@@ -147,7 +147,7 @@ def create():
 @jwt_required()
 def edit(user_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     u = User.query.get_or_404(user_id)
@@ -187,7 +187,7 @@ def edit(user_id):
 @jwt_required()
 def delete(user_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     u = User.query.get_or_404(user_id)
@@ -216,7 +216,8 @@ def _process_form(u, form, files):
     u.apellido = form['apellido']
     u.correo = form['correo']
     u.pais = form['pais']
-
+    u.pais_2 = form.get('pais_2') or None
+    
     local_number = form.get('telefono', '').strip()
     if local_number:
         try:
@@ -228,6 +229,18 @@ def _process_form(u, form, files):
             raise ValueError("No se pudo interpretar el teléfono.")
     else:
         u.telefono = None
+
+    local_number_2 = form.get('telefono_2', '').strip()
+    if local_number_2:
+        try:
+            pn2 = phonenumbers.parse(local_number_2, u.pais_2 or u.pais)
+            if not phonenumbers.is_valid_number(pn2):
+                raise ValueError("Teléfono secundario inválido para el país seleccionado.")
+            u.telefono_2 = phonenumbers.format_number(pn2, PhoneNumberFormat.E164)
+        except NumberParseException:
+            raise ValueError("No se pudo interpretar el teléfono secundario.")
+    else:
+        u.telefono_2 = None
 
     u.estado = form['estado']
     u.rol = form['rol']
@@ -250,10 +263,18 @@ def avatar(user_id):
 @jwt_required()
 def export_users_excel():
     user = current_user()
-    if user.rol not in ['Administrador', 'Trabajador']:
+    if user.rol not in ['Administrador', 'Administrador_2', 'Trabajador']:
         abort(403)
 
     users = User.query.order_by(User.id).all()
+
+    # Diccionario de etiquetas amigables
+    role_labels = {
+        'Administrador': 'Administrador',
+        'Administrador_2': 'Administrador secundario',
+        'Trabajador': 'Miembro JL',
+        'Usuario': 'Usuario'
+    }
 
     data = []
     for u in users:
@@ -263,9 +284,8 @@ def export_users_excel():
             'Telefono':        u.telefono,
             'Pais':            u.pais,
             'Correo':          u.correo,
-            'Rol':             u.rol,
+            'Rol':             role_labels.get(u.rol, u.rol),
             'Empresa':         u.empresa or '',
-
         })
 
     df = pd.DataFrame(data)

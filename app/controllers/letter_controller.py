@@ -19,7 +19,7 @@ def current_user():
 @jwt_required()
 def index():
     user = current_user()
-    if user.rol in ['Administrador', 'Trabajador']:
+    if user.rol in ['Administrador', 'Administrador_2', 'Trabajador']:
         letters = Letter.query.order_by(Letter.created_at.desc()).all()
     else:
         letters = Letter.query.filter_by(user_id=user.id)\
@@ -32,7 +32,7 @@ def index():
 @jwt_required()
 def bulk_upload():
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
 
     if request.method == 'POST':
@@ -90,7 +90,7 @@ def bulk_upload():
 @jwt_required()
 def upload_one():
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
     users = User.query.order_by(User.cod_usuario).all()
 
@@ -128,7 +128,7 @@ def upload_one():
 @jwt_required()
 def edit(letter_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
     l = Letter.query.get_or_404(letter_id)
     users = User.query.order_by(User.cod_usuario).all()
@@ -161,7 +161,7 @@ def edit(letter_id):
 @jwt_required()
 def delete(letter_id):
     user = current_user()
-    if user.rol != 'Administrador':
+    if user.rol not in ['Administrador', 'Administrador_2']:
         abort(403)
     l = Letter.query.get_or_404(letter_id)
     db.session.delete(l)

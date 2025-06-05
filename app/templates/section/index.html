@@ -5,7 +5,7 @@
 
 {% block content %}
   <div class="mb-3">
-    {% if user.rol == 'Administrador' %}
+    {% if user.rol in ['Administrador', 'Administrador_2'] %}
       <a href="{{ url_for('section.create') }}" class="btn btn-primary">Nueva Sección</a>
     {% endif %}
   </div>
@@ -15,7 +15,7 @@
       <tr>
         <th>Orden</th>
         <th>Nombre</th>
-        {% if user.rol == 'Administrador' %}<th>Acciones</th>{% endif %}
+        {% if user.rol in ['Administrador', 'Administrador_2'] %}<th>Acciones</th>{% endif %}
       </tr>
     </thead>
     <tbody>
@@ -23,7 +23,7 @@
       <tr>
         <td>{{ s.order }}</td>
         <td>{{ s.name }}</td>
-        {% if user.rol == 'Administrador' %}
+        {% if user.rol in ['Administrador', 'Administrador_2'] %}
         <td>
           <a href="{{ url_for('section.edit', section_id=s.id) }}" class="btn btn-sm btn-warning">Editar</a>
           <form action="{{ url_for('section.delete', section_id=s.id) }}" method="post"

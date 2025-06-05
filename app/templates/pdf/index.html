@@ -5,7 +5,7 @@
 
 {% block content %}
   <div class="d-flex align-items-center mb-3">
-    {% if user.rol == 'Administrador' %}
+    {% if user.rol in ['Administrador', 'Administrador_2'] %}
       <a href="{{ url_for('pdf.create') }}" class="btn btn-primary">
         Subir nuevo PDF
       </a>
@@ -35,7 +35,7 @@
                 {{ p.title }}
               </a>
             </td>
-            {% if user.rol == 'Administrador' %}
+            {% if user.rol in ['Administrador', 'Administrador_2'] %}
             <td>
               <a href="{{ url_for('pdf.edit', pdf_id=p.id) }}"
                  class="btn btn-sm btn-warning">Editar</a>

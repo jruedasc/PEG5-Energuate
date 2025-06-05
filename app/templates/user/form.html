@@ -68,6 +68,33 @@
       </div>
     </div>
 
+    <div class="row mt-3">
+      <div class="col-md-4">
+        <label>País secundario</label>
+        <select name="pais_2" class="form-control">
+          <option value="">(opcional)</option>
+          {% for c in countries %}
+            <option value="{{ c.code }}"
+              {% if formdata.get('pais_2', usuario.pais_2 if usuario else '') == c.code %}selected{% endif %}>
+              {{ c.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label>Teléfono secundario </label>
+        <input
+          name="telefono_2"
+          class="form-control"
+          placeholder="Ej: 78494120"
+          value="{{ formdata.get('telefono_2', usuario.telefono_2[-8:] if usuario and usuario.telefono_2 else '') }}">
+        <small class="form-text text-muted">
+          Sin el prefijo; se antepondrá automáticamente el código de país.
+        </small>
+      </div>
+    </div>
+
+
     <!-- Empresa, Rol y Estado -->
     <div class="row mt-3">
       <div class="col-md-4">
@@ -78,17 +105,35 @@
           placeholder="Nombre de la empresa"
           value="{{ formdata.get('empresa', usuario.empresa if usuario else '') }}">
       </div>
+
       <div class="col-md-4">
         <label>Rol</label>
         <select name="rol" class="form-control">
-          {% for opt in ['Administrador','Trabajador','Usuario'] %}
-            <option value="{{ opt }}"
-              {% if formdata.get('rol', usuario.rol if usuario else '') == opt %}selected{% endif %}>
-              {{ opt }}
-            </option>
+          {% set roles_visibles = {
+            'Administrador': 'Administrador',
+            'Administrador_2': 'Administrador secundario',
+            'Trabajador': 'Miembro de la junta de licitación',
+            'Usuario': 'Usuario'
+          } %}
+
+          {% for value, label in roles_visibles.items() %}
+            {# Si el usuario autenticado es Administrador, puede ver todos #}
+            {% if user.rol == 'Administrador' %}
+              <option value="{{ value }}"
+                {% if formdata.get('rol', usuario.rol if usuario else '') == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              
+            {% elif user.rol == 'Administrador_2' and value in ['Trabajador', 'Usuario'] %}
+              <option value="{{ value }}"
+                {% if formdata.get('rol', usuario.rol if usuario else '') == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+            {% endif %}
           {% endfor %}
         </select>
       </div>
+
       <div class="col-md-4">
         <label>Estado</label>
         <select name="estado" class="form-control">
@@ -100,6 +145,7 @@
           {% endfor %}
         </select>
       </div>
+      
     </div>
 
     <br>
