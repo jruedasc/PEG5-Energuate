@@ -33,12 +33,11 @@ def login():
 
 
 @login_bp.route("/menu")
-@jwt_required() 
+@jwt_required()
 def menu():
     user_id = int(get_jwt_identity())
     user = User.query.get(user_id)
-    return render_template("layout.html", user=user)
-
+    return render_template("menu.html", user=user)
 
 @login_bp.route("/logout")
 def logout():
