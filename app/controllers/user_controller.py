@@ -28,19 +28,23 @@ def _get_countries():
 @user_bp.route('/')
 @jwt_required()
 def index():
-    # 1) Usuario actual y permiso
     user = current_user()
     if user.rol not in ['Administrador', 'Administrador_2', 'Trabajador']:
         abort(403)
 
-    total_users = User.query.count()
+    if user.rol == 'Administrador':
+        base_query = User.query  
+    else:
+        base_query = User.query.filter(User.rol != 'Administrador')  
+
+    total_users = base_query.count()
 
     estado_sel = request.args.get('estado', '')
     empresa_sel = request.args.get('empresa', '')
     rol_sel = request.args.get('rol', '')
     nombre_busq = request.args.get('nombre', '')
 
-    q = User.query
+    q = base_query
     if estado_sel:
         q = q.filter(User.estado == estado_sel)
     if empresa_sel:
@@ -50,9 +54,11 @@ def index():
     if nombre_busq:
         q = q.filter(User.nombre_completo.ilike(f'%{nombre_busq}%'))
 
-    estado_counts = db.session.query(User.estado, func.count(User.id)).group_by(User.estado).all()
-    empresa_counts = db.session.query(User.empresa, func.count(User.id)).group_by(User.empresa).all()
-    rol_counts = db.session.query(User.rol, func.count(User.id)).group_by(User.rol).all()
+    filtro_base = User.query if user.rol == 'Administrador' else User.query.filter(User.rol != 'Administrador')
+
+    estado_counts = filtro_base.with_entities(User.estado, func.count(User.id)).group_by(User.estado).all()
+    empresa_counts = filtro_base.with_entities(User.empresa, func.count(User.id)).group_by(User.empresa).all()
+    rol_counts = filtro_base.with_entities(User.rol, func.count(User.id)).group_by(User.rol).all()
 
     users = q.order_by(User.id).all()
 
@@ -266,12 +272,12 @@ def export_users_excel():
     if user.rol not in ['Administrador', 'Administrador_2', 'Trabajador']:
         abort(403)
 
-    users = User.query.order_by(User.id).all()
+    users = User.query.filter(User.rol != 'Administrador').order_by(User.id).all()
 
     # Diccionario de etiquetas amigables
     role_labels = {
-        'Administrador': 'Administrador',
-        'Administrador_2': 'Administrador secundario',
+        'Administrador': 'Super Administrador',
+        'Administrador_2': 'Administrador',
         'Trabajador': 'Miembro JL',
         'Usuario': 'Usuario'
     }

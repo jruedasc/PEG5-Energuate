@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="description" content="PEG-5" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PEG-5 | Tenders</title>
+
+  <link rel="icon" 
+        type="image/png"
+        href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="shortcut icon"
+        type="image/png"
+        href="{{ url_for('static', filename='img/favicon.png') }}">
+
+  <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <!-- Bootstrap CSS + Icons -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-icons.css') }}" />
+
+  <!-- Tus estilos -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="wrapper">
+
+    <!-- HEADER / NAV -->
+    <header id="home">
+      <nav id="ener-nav" class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#home">
+            <img src="{{ url_for('static', filename='img/PEG-5-LOGO-FULL-COLOR.jpg') }}"
+                 alt="Logo PEG-5"
+                 class="logo-img"/>
+          </a>
+          <div class="d-flex ms-auto align-items-center">
+            <a class="nav-link nav-login me-3" href="{{ url_for('login.login') }}">Login</a>
+            <a href="https://www.energuate.com/" target="_blank" rel="noopener noreferrer">
+              <div class="logo-box me-2">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo secundario" />
+              </div>
+            </a>
+            <a href="https://eegsa.com/peg-5-2025/#docs-descargar" target="_blank" rel="noopener noreferrer">
+              <div class="logo-box">
+                <img src="{{ url_for('static', filename='img/EEGSA_FULL COLOR.png') }}" alt="Logo EEGSA" />
+              </div>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- CARRUSEL CUSTOM -->
+    <section id="carouselImgs" class="carousel-custom">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-1.jpg') }}" alt="Imagen 1" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-2.jpg') }}" alt="Imagen 2" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-3.jpg') }}" alt="Imagen 3" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-4.jpg') }}" alt="Imagen 4" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-5.jpg') }}" alt="Imagen 5" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-6.jpg') }}" alt="Imagen 6" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-7.jpg') }}" alt="Imagen 7" />
+        </div>
+        <div class="carousel-item">
+          <img src="{{ url_for('static', filename='img/Foto-Carosel-9.jpg') }}" alt="Imagen 8" />
+        </div>
+      </div>
+
+      <!-- indicadores -->
+      <div class="carousel-indicators">
+        <button class="active" data-index="0"></button>
+        <button data-index="1"></button>
+        <button data-index="2"></button>
+        <button data-index="3"></button>
+        <button data-index="4"></button>
+        <button data-index="5"></button>
+        <button data-index="6"></button>
+        <button data-index="7"></button>
+      </div>
+    </section>
+
+    <!-- SECCIÓN PEG-5 INFORMATIVA -->
+    <section class="peg5-info py-5 bg-light">
+      <div class="container">
+        <h2 class="mb-4 fw-bold text-center">PEG-5, the largest electricity generation tender in Guatemala's history</h2>
+        
+        <div class="text-center mb-3">
+          <a href="{{ url_for('main.index') }}" class="btn btn-warning text-success fw-bold">
+            Spanish Version
+          </a>
+        </div>
+        
+        <p>EEGSA and Energuate seek to guarantee electricity supply with a sustainable, long-term approach to transform the country’s energy future.</p>
+        <p>The PEG-5-2025 Open Tender process aims to guarantee the long-term supply of electricity for distribution service users: Empresa Eléctrica de Guatemala, S.A. (EEGSA), Distribuidora de Electricidad de Oriente, S.A. (Deorsa), and Distribuidora de Electricidad de Occidente, S.A. (Deocsa).</p>
+        <p>This call represents the largest generation tender in the country’s energy history, requiring up to 1,400 MW of guaranteed capacity and associated energy, to be supplied starting in 2030 for a term of up to 15 years.</p>
+        <p>The process stems from Resolution No. 270-2024, issued by the CNEE on October 30, 2024, which approved the Terms of Reference (TOR) that served as the basis for the preparation of this tender. The objective defined in the TOR is “the contracting of the total power and electrical energy requirements that guarantee coverage of the distributors’ Firm Demand for the provision of the final distribution service.”</p>
+        <p>In addition, the TORs establish two energy curves that must be considered in the bidding conditions:</p>
+          <ul>
+            <li><strong>Base block curve:</strong> energy to be covered in all hours of all days of the supply period.</li>
+            <li><strong>Base block complement:</strong> difference between the total requirement and the base block..</li>
+          </ul>
+        <p>These technical elements will directly influence the selection of technologies, providing space for both new renewable plants and non-renewable technologies with low CO₂ emissions, operating generation plants, and operating plants combined with new renewable generation.</p>
+        <p>The process includes four possible supply start dates, offering flexibility to participants:</p>
+            <ul class="icon-list calendar">
+                <li><i class="bi bi-calendar3 me-2"></i>May 1, 2030</li>
+                <li><i class="bi bi-calendar3 me-2"></i>May 1, 2031</li>
+                <li><i class="bi bi-calendar3 me-2"></i>May 1, 2032</li>
+                <li><i class="bi bi-calendar3 me-2"></i>May 1, 2033</li>
+            </ul>
+        <p>The challenges posed by this tender include:</p>
+                <ol class="numbered-list">
+                    <li><strong>Transmission infrastructure:</strong> The National Interconnected System has not been updated in more than eight years, imposing an urgent need to modernize power transmission lines.</li>
+                    <li><strong>Termination of current contracts:</strong> Upon completion of contracts awarded between 2030 and 2033, many renewable plants will still have useful life to continue operating, generating marketing opportunities through the SPOT market or bilateral agreements.</li>
+                </ol>
+        <p>Renewable technologies will continue to be key to the national energy mix, especially if they are complemented by low-emission non-renewable solutions that guarantee system stability and competitive prices for consumers.</p>
+        <p>Starting Wednesday, April 23, the bidding rules are available for purchase, and interested parties can contact the distributors directly to participate in this important process.</p>
+        <p>With PEG-5, Guatemala is moving toward a modern, sustainable, and diversified energy mix, attracting multimillion-dollar foreign investments that will strengthen energy security, boost economic development, and consolidate the country as a regional leader in electricity sector planning.</p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN INFORMACIÓN DE RETIRO DE BASES -->
+    <section class="bases-info py-5">
+      <div class="container">
+        <h2 class="mb-4 fw-bold text-center">Bidding rules may be withdrawn by submitting a request to the following email addresses:</h2>
+
+          <div class="text-center my-3">
+            <div class="email-inline icon-list d-inline-flex flex-wrap justify-content-center gap-3">
+              <span><i class="bi bi-envelope-fill me-2"></i>dcarranza@energuate.com</span>
+              <span><i class="bi bi-envelope-fill me-2"></i>jfigueroa@eegsa.net</span>
+            </div>
+          </div>
+
+        <p>Withdrawal of bidding rules includes the right to submit a bid, request clarifications and questions, receive responses and addenda; as well as receive any additional information generated and relevant to Open Bidding PEG-5-2025. When collecting the bidding documents, the interested party must designate an authorized representative, provide a mandate or power of attorney, and provide an address (within Guatemala City), a telephone number, and an email address.</p>
+        <p><strong>The amount that interested parties must pay to collect the bidding documents is:</strong> <br>
+        twenty thousand United States dollars (US$20,000.00).</p>
+
+        <p><strong>When making the deposit to acquire these bidding rules, the following information must be sent to the email addresses of the bidding committee:</strong></p>
+          <ul class="icon-list alpha">
+            <li>Billing information: name of the interested entity and tax identification number</li>
+            <li>Address for sending notifications (within the perimeter of Guatemala City)</li>
+            <li>Telephone number</li>
+            <li>Email address</li>
+            <li>General information of the authorized representative</li>
+            <li>Copy of the deposit made</li>
+          </ul>
+
+        <p><strong>The amount that interested parties must pay to collect the bidding rules must be made at Banco Industrial, S.A. in any of the following bank accounts:</strong></p>
+        <ul>
+          <li>Banco Industrial, S.A. <strong>000-207663-6</strong> (in US dollars) of Empresa Eléctrica de Guatemala, S.A.</li>
+          <li>Banco Industrial, S.A. <strong>000-050017-3</strong> (in quetzales) of Empresa Eléctrica de Guatemala, S.A.</li>
+        </ul>
+    </section>
+
+    <!-- SECCIÓN INFORMACIÓN DE EVENTOS -->
+    <section class="bases-eventos py-5">
+        <h2 class="mt-5 mb-3 fw-semibold text-center">Bidding events</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="table-light">
+              <tr>
+                <th>Event</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Acquisition of bidding documents.</td>
+                <td>From the publication of the call for proposals until one day before de Bid Submission Date.</td>
+              </tr>
+              <tr>
+                <td>Informative meetings.</td>
+                <td>Starting in April 2025</td>
+              </tr>
+              <tr>
+                <td>Deadline for submitting requests for clarifications to the bidding documents.</td>
+                <td>October 10, 2025</td>
+              </tr>
+              <tr>
+                <td>Deadline for responding to requests for clarifications or questions about the bidding documents and for issuing Addenda to the bidding documents.</td>
+                <td>October 31, 2025</td>
+              </tr>
+              <tr>
+                <td>Date for submission and opening of technical bids.</td>
+                <td>November 21, 2025</td>
+              </tr>
+              <tr>
+                <td>Date for the economic evaluation of bids.</td>
+                <td>January 15, 2026</td>
+              </tr>
+              <tr>
+                <td>Award date.</td>
+                <td>January 30, 2026</td>
+              </tr>
+              <tr>
+                <td>Deadline for signing each supply contract.</td>
+                <td>Up to 3 months after the award.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DOCUMENTOS -->
+    <section class="pdf-section py-5 overflow-hidden">
+      <div class="container position-relative">
+        <h2 class="pdf-section__title text-center mb-5"> Legal Documentationl </h2>
+        <div class="row row-cols-1 row-cols-md-2 gx-0.5 gy-4">
+          <div class="col d-flex justify-content-center">
+            <a href="{{ url_for('static', filename='pdf/1. CNEE-270-2024  DR TR PEG-5-2024.pdf') }}"
+              target="_blank"
+              class="pdf-link d-flex flex-column align-items-center text-decoration-none">
+              <i class="bi bi-file-earmark-pdf-fill fs-1 mb-2"></i>
+              <span class="text-center">1. CNEE-270-2024 DR TR PEG-5-2024</span>
+            </a>
+          </div>
+          <div class="col d-flex justify-content-center">
+            <a href="{{ url_for('static', filename='pdf/2. CNEE-108-2025  DEOCSA.pdf') }}"
+              target="_blank"
+              class="pdf-link d-flex flex-column align-items-center text-decoration-none">
+              <i class="bi bi-file-earmark-pdf-fill fs-1 mb-2"></i>
+              <span class="text-center">2. CNEE-108-2025 DEOCSA</span>
+            </a>
+          </div>
+          <div class="col d-flex justify-content-center">
+            <a href="{{ url_for('static', filename='pdf/3. Bases de Licitación PEG-5 CNEE-108-2025.pdf') }}"
+              target="_blank"
+              class="pdf-link d-flex flex-column align-items-center text-decoration-none">
+              <i class="bi bi-file-earmark-pdf-fill fs-1 mb-2"></i>
+              <span class="text-center">3. Tender Bases PEG-5 CNEE-108-2025</span>
+            </a>
+          </div>
+          <div class="col d-flex justify-content-center">
+            <a href="{{ url_for('static', filename='pdf/4. Manual de Evaluación de Ofertas Economicas PEG-5 CNEE-108-2025.pdf') }}"
+              target="_blank"
+              class="pdf-link d-flex flex-column align-items-center text-decoration-none">
+              <i class="bi bi-file-earmark-pdf-fill fs-1 mb-2"></i>
+              <span class="text-center">4. PEG-5 Economic Bid Evaluation Manual</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <!-- Texto legal -->
+        <div class="text-center small">
+            Subject to change<br>
+            © 2025 All rights reserved PEG-5
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /.wrapper -->
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

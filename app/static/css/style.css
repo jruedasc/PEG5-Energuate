@@ -13,6 +13,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: #fff;
+  color: #203a5d;
 }
 
 /* 2) NAVBAR */
@@ -50,7 +51,7 @@ html, body {
 /* 3) CAROUSEL CUSTOM */
 .carousel-custom {
   position: relative;
-  margin-top: 85px; /* espacio para header */
+  margin-top: 85px;
   overflow: hidden;
 }
 .carousel-custom .carousel-inner {
@@ -69,18 +70,15 @@ html, body {
   max-height: 87vh;
   object-fit: cover;
 }
-
-/* indicadores */
 .carousel-custom .carousel-indicators {
   position: absolute;
-  top: 1rem;      
-  left: 1rem;      
-  transform: none; 
+  top: 1rem;
+  left: 1rem;
+  transform: none;
   display: flex;
   gap: 1rem;
   z-index: 10;
 }
-
 .carousel-custom .carousel-indicators button {
   width: 1rem;
   height: 1rem;
@@ -94,57 +92,149 @@ html, body {
   background: #0dcaf0;
 }
 
-/* 4) PDF */
+/* TÍTULOS UNIFICADOS */
+.peg5-info h2,
+.peg5-info h3,
+.bases-info h2,
+.bases-info h3,
+.bases-eventos h2,
+.bases-eventos h3,
+.pdf-section h2,
+.pdf-section h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0070ba;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* 4) SECCIÓN PEG-5 INFORMATIVA */
+.peg5-info {
+  position: relative;
+  margin-top: -4rem;
+  padding-top: 6rem;
+  background-color: #f2f9fc;
+  border-radius: 5rem 5rem 4rem 4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 4rem 1rem;
+}
+.peg5-info p,
+.peg5-info li {
+  font-size: 1rem;
+  color: #203a5d;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+.peg5-info ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.peg5-info li::marker {
+  color: #0dcaf0;
+  font-weight: bold;
+}
+
+/* 5) SECCIÓN BASES DE LICITACIÓN */
+.bases-info {
+  position: relative;
+  margin-top: -2rem;
+  padding-top: 2rem;
+  background-color: #ffffff;
+  border-radius: 5rem 5rem 4rem 4rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 4rem 1rem;
+}
+.bases-info p,
+.bases-info li {
+  font-size: 1rem;
+  color: #203a5d;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+.bases-info ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.bases-info li::marker {
+  color: #0dcaf0;
+  font-weight: bold;
+}
+
+/* 6) SECCIÓN EVENTOS DE LICITACIÓN */
+.bases-eventos {
+  position: relative;
+  z-index: 1;
+  margin-top: -1rem;
+  padding-top: 1rem;
+  border-top-left-radius: 5rem;
+  border-top-right-radius: 5rem;
+  background-color: #f2f9fc;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+}
+.bases-eventos table {
+  width: 80%;
+  margin: 2rem auto;
+  font-size: 0.85rem;
+  border-collapse: collapse;
+  background: #f9f9f9;
+  border-radius: .5rem;
+  overflow: hidden;
+}
+.bases-eventos thead {
+  background-color: #e8f4f7;
+}
+.bases-eventos th,
+.bases-eventos td {
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  color: #203a5d;
+  border-bottom: 1px solid #ddd;
+}
+.bases-eventos th {
+  font-weight: bold;
+  color: #0070ba;
+}
+
+/* 7) PDF */
 .pdf-section {
   position: relative;
   z-index: 1;
-  margin-top: -4rem;              
-  padding-top: 6rem;              
+  margin-top: -2rem;
+  padding-top: 3rem;
   border-top-left-radius: 5rem;
   border-top-right-radius: 5rem;
-  background: #e8f4f7;            /* celeste suave */
+  background-color: #fdfdfd;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
 }
-
-/* Tarjetas de PDF */
-
-/* Título de la sección PDF */
-.pdf-section__title {
-  font-size: 1.5rem;              
-  font-weight: 700;                
-  color: #000000;                  
-  position: center;
-  display: center;         
-}
-
 .pdf-section .pdf-link {
   width: 100%;
   max-width: 250px;
   padding: 1rem;
   border-radius: .5rem;
-  background: #ffffffe5;              
-  color: #000;                   
+  background: #ffffffe5;
+  color: #203a5d;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: transform .2s, box-shadow .2s;
 }
-
 .pdf-section .pdf-link:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 }
-
 .pdf-section .pdf-link i {
-  color: #dc3545;                  
+  color: #dc3545;
 }
 
-/* 5) FOOTER */
+/* 8) FOOTER */
 .site-footer {
   position: relative;
-  z-index: 1;                     
-  margin-top: -2rem;              
-  padding-top: 6rem;              
-  background: #fff;               
-  color: #000;                    
+  z-index: 1;
+  margin-top: -2rem;
+  padding-top: 2rem;
+  background-color: #f2f9fc;
+  color: #203a5d;
   border-top-left-radius: 5rem;
   border-top-right-radius: 5rem;
   box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
@@ -161,4 +251,57 @@ html, body {
   margin-top: 1rem;
 }
 
+/* 9) LISTAS PERSONALIZADAS CON ICONOS */
+.icon-list {
+  list-style: none;
+  padding-left: 0;
+}
+.icon-list li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+.icon-list li i {
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  color: #0dcaf0;
+}
+
+/* LISTA ALFABÉTICA: a), b), c)... */
+.icon-list.alpha {
+  counter-reset: alpha-counter;
+}
+.icon-list.alpha li {
+  list-style: none;
+  padding-left: 2.5rem;
+}
+.icon-list.alpha li::before {
+  counter-increment: alpha-counter;
+  content: counter(alpha-counter, lower-alpha) ". ";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #0dcaf0;
+  font-weight: bold;
+}
+
+.email-inline span {
+  font-size: 1rem;
+  margin: 0 1rem;
+}
+
+.numbered-list {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+.numbered-list li {
+  margin-bottom: 1rem;
+  color: #0c2d4a;
+}
+.numbered-list li::marker {
+  color: #0dcaf0;
+  font-weight: bold;
+}
 
