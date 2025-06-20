@@ -12,6 +12,19 @@
       </a>
     {% endif %}
   </div>
+
+  <div class="mb-3">
+    <label for="userFilter">Filtrar por usuario:</label>
+    <select id="userFilter" class="form-control" onchange="filterByUser()">
+      <option value="">Todos</option>
+      {% for nombre in usuarios_unicos %}
+        <option value="{{ nombre }}">{{ nombre }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+
+
   <br>
   {% if letters %}
     <table class="table table-sm table-striped">
@@ -59,4 +72,8 @@
   {% else %}
     <p class="text-muted">No tienes cartas disponibles.</p>
   {% endif %}
+  {% block scripts %}
+  <script src="{{ url_for('static', filename='js/letter_form.js') }}"></script>
+  {% endblock %}
+
 {% endblock %}

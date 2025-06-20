@@ -20,12 +20,16 @@ def current_user():
 def index():
     user = current_user()
     if user.rol in ['Administrador', 'Administrador_2', 'Trabajador']:
-        letters = Letter.query.order_by(Letter.created_at.desc()).all()
+        letters = Letter.query.join(User).order_by(User.nombre_completo.asc(), Letter.created_at.desc()).all()
     else:
         letters = Letter.query.filter_by(user_id=user.id)\
                               .order_by(Letter.created_at.desc())\
                               .all()
-    return render_template('letter/index.html', letters=letters, user=user)
+
+    # Construir lista única de usuarios con nombre completo
+    usuarios_unicos = sorted({f"{l.user.nombre_completo} {l.user.apellido}" for l in letters})
+    return render_template('letter/index.html', letters=letters, user=user, usuarios_unicos=usuarios_unicos)
+
 
 
 @letter_bp.route('/bulk_upload', methods=['GET', 'POST'])
@@ -64,6 +68,10 @@ def bulk_upload():
             u = User.query.filter_by(cod_usuario=cod).first()
             if not u:
                 errores.append(f"{filename}: usuario '{cod}' no existe")
+                continue
+
+            if u.rol != 'Usuario':
+                errores.append(f"{filename}: usuario '{cod}' no tiene rol permitido para recibir cartas")
                 continue
 
             data = file.read()
